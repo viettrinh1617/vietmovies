@@ -9,6 +9,12 @@ function ProductSearch() {
       name="searchQuery"
       sx={{ width: 300 }}
       size="small"
+      // onChange={(event) => {
+      //   let filter = event.target.value;
+      //   if(filter){
+      //     setSearchParams(filter)}       
+      //   }
+      // }
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

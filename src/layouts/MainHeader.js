@@ -7,12 +7,14 @@ import IconButton from "@mui/material/IconButton";
 
 import Logo from "../components/Logo";
 import useAuth from "../hooks/useAuth";
+import { BG_IMAGE_URL, IMAGE_URL, API_KEY} from "../app/config";
+import { Brightness2 } from "@mui/icons-material";
 
 function MainHeader() {
   const { user } = useAuth();
 
   return (
-    <Box>
+    <>
       <AppBar position="static">
         <Toolbar variant="dense">
           <IconButton
@@ -24,7 +26,7 @@ function MainHeader() {
             <Logo />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
-            CoderStore
+            Movie List
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Typography variant="h6" color="inherit" component="div">
@@ -32,7 +34,8 @@ function MainHeader() {
           </Typography>
         </Toolbar>
       </AppBar>
-    </Box>
+
+    </>
   );
 }
 

@@ -19,6 +19,8 @@ import apiService from "../app/apiService";
 import LoadingScreen from "../components/LoadingScreen";
 import { Alert } from "@mui/material";
 
+import { API_KEY, BG_IMAGE_URL , IMAGE_URL} from "../app/config";
+
 function DetailPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,8 +32,9 @@ function DetailPage() {
       const getProduct = async () => {
         setLoading(true);
         try {
-          const res = await apiService.get(`/products/${params.id}`);
+          const res = await apiService.get(`/movie/${params.id}?api_key=${API_KEY}`);
           setProduct(res.data);
+          console.log("detail",res.data);
           setError("");
         } catch (error) {
           console.log(error);
@@ -42,14 +45,15 @@ function DetailPage() {
       getProduct();
     }
   }, [params]);
-
   return (
-    <Container sx={{ my: 3 }}>
+    <Container sx={{ my: 3, height: '100vh', backgroundSize: `cover`, 
+      // backgroundImage: `url(${BG_IMAGE_URL}${product.backdrop_path})` 
+      }}>
       <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
         <Link underline="hover" color="inherit" component={RouterLink} to="/">
-          CoderStore
+          MainPage
         </Link>
-        <Typography color="text.primary">{product?.name}</Typography>
+        <Typography color="text.primary">{product?.title}</Typography>
       </Breadcrumbs>
       <Box sx={{ position: "relative", height: 1 }}>
         {loading ? (
@@ -62,6 +66,15 @@ function DetailPage() {
               <>
                 {product && (
                   <Card>
+                    <Box
+                              component="img"
+                              sx={{
+                                width: 1,
+                                height: 1,
+                              }}
+                              src={`${BG_IMAGE_URL}${product.backdrop_path}`}
+                              alt="product"
+                            />
                     <Grid container>
                       <Grid item xs={12} md={6}>
                         <Box p={2}>
@@ -78,7 +91,7 @@ function DetailPage() {
                                 width: 1,
                                 height: 1,
                               }}
-                              src={product.cover}
+                              src={`${IMAGE_URL}${product.poster_path}`}
                               alt="product"
                             />
                           </Box>
@@ -101,7 +114,7 @@ function DetailPage() {
                           {product.status}
                         </Typography>
                         <Typography variant="h5" paragraph>
-                          {product.name}
+                          {product.title}
                         </Typography>
                         <Stack
                           direction="row"
@@ -110,7 +123,8 @@ function DetailPage() {
                           sx={{ mb: 2 }}
                         >
                           <Rating
-                            value={product.totalRating}
+                            max={5}
+                            value={product.vote_average*0.5}
                             precision={0.1}
                             readOnly
                           />
@@ -118,10 +132,10 @@ function DetailPage() {
                             variant="body2"
                             sx={{ color: "text.secondary" }}
                           >
-                            ({product.totalReview} reviews)
+                            ({product.vote_count} votes)
                           </Typography>
                         </Stack>
-                        <Typography variant="h4" sx={{ mb: 3 }}>
+                        <Typography variant="body1" sx={{ mb: 3 }}>
                           <Box
                             component="span"
                             sx={{
@@ -131,14 +145,14 @@ function DetailPage() {
                           >
                             {product.priceSale && fCurrency(product.priceSale)}
                           </Box>
-                          &nbsp;{fCurrency(product.price)}
+                          &nbsp;{`Release date: ${product.release_date}`}
                         </Typography>
 
                         <Divider sx={{ borderStyle: "dashed" }} />
                         <Box>
                           <ReactMarkdown
                             rehypePlugins={[rehypeRaw]}
-                            children={product.description}
+                            children={product.overview}
                           />
                         </Box>
                       </Grid>

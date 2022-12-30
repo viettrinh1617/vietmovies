@@ -5,22 +5,24 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Stack } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { fCurrency } from "../utils";
+
+
+import { IMAGE_URL } from "../app/config";
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
   return (
-    <Card onClick={() => navigate(`/product/${product.id}`)}>
+    <Card onClick={() => navigate(`/movie/${product.id}`)}>
       <CardActionArea>
         <CardMedia
           component="img"
           height="200"
-          image={product.cover}
+          image={`${IMAGE_URL}${product.poster_path}`}
           alt="green iguana"
         />
         <CardContent>
           <Typography gutterBottom variant="body1" component="div" noWrap>
-            {product.name}
+            {product.title}
           </Typography>
           <Stack
             direction="row"
@@ -28,16 +30,16 @@ function ProductCard({ product }) {
             alignItems="center"
             justifyContent="flex-end"
           >
-            {product.priceSale && (
+            {product.vote_average && (
               <Typography
                 component="span"
-                sx={{ color: "text.disabled", textDecoration: "line-through" }}
+                sx={{ textDecoration: "none" }}
               >
-                {fCurrency(product.priceSale)}
+                {`${(product.vote_average*0.5).toFixed(1)}⛤`}
               </Typography>
             )}
-            <Typography variant="subtitle1">
-              {fCurrency(product.price)}
+            <Typography variant="subtitle1" sx={{color:"text.disabled"}}>
+              {`${product.vote_count} votes`}
             </Typography>
           </Stack>
         </CardContent>
