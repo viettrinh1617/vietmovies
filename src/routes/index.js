@@ -8,6 +8,13 @@ import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AuthRequire from "./AuthRequire";
 
+// tổ chức route theo genres
+
+// /genres/:genresId hoặc ?genres=3
+
+// ?sort_by=featured
+// ?query=avatar
+
 function Router() {
   return (
     <Routes>
