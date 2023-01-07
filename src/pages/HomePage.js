@@ -64,14 +64,14 @@ function HomePage() {
       try {
         if(filters.searchQuery)          
           {
-            const res = await apiService.get(`search/movie?api_key=${API_KEY}&page=${page}&include_adult=false&include_video=true&query=${encodeURIComponent(filters.searchQuery)}`);
+            const res = await apiService.get(`search/movie?api_key=${API_KEY}&page=${page}&include_adult=true&include_video=true&query=${encodeURIComponent(filters.searchQuery)}`);
             setProducts(res.data.results);
             setTotalPage(res.data.total_pages);
             setError("");
           }
           else
           { 
-            let url = `discover/movie?api_key=${API_KEY}&include_video=true&include_adult=false&page=${page}`
+            let url = `discover/movie?api_key=${API_KEY}&include_video=true&include_adult=true&page=${page}`
             // if(filters.include_adult==="Yes"){
             //   url+= `&include_adult=true`
             // }
